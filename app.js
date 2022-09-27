@@ -1,7 +1,8 @@
-//variables for count, clickedBoxes, allboxes, winpositions in the game, X and O 
+
 var count = 1;
 var clickedBoxes = [];
 var gameOver = false;
+
 var allBoxes = 
 ["b1","b2","b3",
  "b4","b5","b6",
@@ -10,64 +11,48 @@ var winPositions = ["b1 b2 b3","b4 b5 b6","b7 b8 b9","b1 b4 b7","b2 b5 b8","b3 b
 const xTurn = "X";
 const oTurn = "O";
 
-// the function that i need after clicking playnow
-function startGame()
-{
-// Get the Player Names 1 and 2 and count of click for them so we dont have inifinite click for each
+
+function startGame() {
 	let player1 = document.getElementById("player1").value;
 	let player2 = document.getElementById("player2").value;
 
 	count = 1;
-// Set the clickedBoxes array empty/blank
 	clickedBoxes = [];
-// Loop with all boxes to set EMPTY value in it and set the click
 	for(var b = 0; b < allBoxes.length; b++)
 	{
 		document.getElementById(allBoxes[b]).innerHTML = "";
 		document.getElementById(allBoxes[b]).style.pointerEvents = "auto";
 	}
-// Hide the winner message, and show whos turn it is 
 	document.getElementById("winMessage").style.display = "none";
-
 	document.getElementById("turnMessage").style.display = "block";
 
 	document.getElementById("turnMessage").innerHTML = player1+"'S TURN";
 }
-// nextPlayer execute when any player made his turn
+
 function nextPlayer(elem) {
-// Get the Player Names 1 and 2
 	let player1 = document.getElementById("player1").value;
 	let player2 = document.getElementById("player2").value;
 	if(elem.innerHTML != "") return;
 	clickedBoxes.push(elem.id);
-// Check if click count is 1, set the first player's turn to X 
+
     if(count == 1) {
 
 		elem.innerHTML = xTurn;
-// Set the click count 2, ceck if clicked box length is less than 4 because 3 is needed to win, then check the winner
 		count = 2;
 		if(clickedBoxes.length > 4)
 			checkWinner();
-// Change the next player's turn message
 		document.getElementById("turnMessage").innerHTML = player2+"'S TURN";
     }
-// Check if click count is and check same for next player, setting player2 to O
-	else if(count == 2)
-	{
+	else if(count == 2){
 	    elem.innerHTML = oTurn;
-// Set the click count 1
         count = 1;
-// Check if clicked box length > 4, then check the winner
 		if(clickedBoxes.length > 4)
 			checkWinner();
-// Change the next player's turn message
 		document.getElementById("turnMessage").innerHTML = player1+"'S TURN";
     }
 }
 
-// function resetGame(){
-// 	document.getElementById("restartGame");
-// }
+
 
 function checkWinner()
 {
@@ -91,9 +76,7 @@ function checkWinner()
 				disableClicks();
 				return false;
 			}
-			else if(document.getElementById(wincombinations[0]).innerHTML == oTurn && document.getElementById(wincombinations[1]).innerHTML == oTurn && document.getElementById(wincombinations[2]).innerHTML == oTurn)
-			{
-
+			else if(document.getElementById(wincombinations[0]).innerHTML == oTurn && document.getElementById(wincombinations[1]).innerHTML == oTurn && document.getElementById(wincombinations[2]).innerHTML == oTurn){
 				document.getElementById("turnMessage").style.display = "none";
 				document.getElementById("winMessage").style.display = "block";
 				document.getElementById("winMessage").innerHTML = player2+" WINS";
@@ -101,8 +84,7 @@ function checkWinner()
 				disableClicks();
 				return false;
 			}
-			else
-			{
+			else{
 // Set the message GAME DRAW and disable all box clicks
 				document.getElementById("turnMessage").style.display = "none";
 				document.getElementById("winMessage").style.display = "block";
@@ -112,16 +94,13 @@ function checkWinner()
 			}
 		}
 	}
-	else
-	{
-// Check all winning positions combos
-		for(var w = 0; w < winPositions.length; w++)
-		{
-// Get the winning como
+	else{
+// Check all winning positions combos and getting winning combo
+		for(var w = 0; w < winPositions.length; w++) {
 			var wincombinations = winPositions[w].split(" ");
 			if(document.getElementById(wincombinations[0]).innerHTML == xTurn && document.getElementById(wincombinations[1]).innerHTML == xTurn && document.getElementById(wincombinations[2]).innerHTML == xTurn)
 			{
-// Set Player 1 and 2 win message and disable all box clicks, also repetative
+// Set Player 1 and 2 win message and disable all box clicks
 				document.getElementById("turnMessage").style.display = "none";
 				document.getElementById("winMessage").style.display = "block";
 				document.getElementById("winMessage").innerHTML = player1+" WINS";
@@ -129,9 +108,7 @@ function checkWinner()
 				disableClicks();
 				return false;
 			}
-			else if(document.getElementById(wincombinations[0]).innerHTML == oTurn && document.getElementById(wincombinations[1]).innerHTML == oTurn && document.getElementById(wincombinations[2]).innerHTML == oTurn)
-			{
-
+			else if(document.getElementById(wincombinations[0]).innerHTML == oTurn && document.getElementById(wincombinations[1]).innerHTML == oTurn && document.getElementById(wincombinations[2]).innerHTML == oTurn){
 				document.getElementById("turnMessage").style.display = "none";
 				document.getElementById("winMessage").style.display = "block";
 				document.getElementById("winMessage").innerHTML = player2+" WINS";
@@ -141,20 +118,15 @@ function checkWinner()
 			}
 		}
 	}
-
 }
-function stopClicks()
-{
-// Loop through all boxes
+function stopClicks() {
 	for(var i = 0; i < allBoxes.length; i++)
 	{
-// i need tostop the mouse click on each boxes
+// i need to stop the mouse click on each boxes
 		document.getElementById(allBoxes[i]).style.pointerEvents = "none";
 	}
 }
-// call the stopClicks function to stop all the box clicks
 stopClicks();
-//need to make a fucntion that I can invoke later when the game is being played against computer
 
 // When you click on Play Now button i need outcomes based on whats in player boxes
 document.getElementById("playButton").addEventListener("click", function() {
@@ -184,11 +156,23 @@ document.getElementById("playButton").addEventListener("click", function() {
 // Empty the error message and Hide it
 		document.getElementById("error").innerHTML = "";
 		document.getElementById("error").style.display = "none";
-// Allow the PLAY NOW button
-		// document.getElementById("playButton").innerHTML = "reset";
-		// document.getElementById("playButton").style.pointerEvents = "none";
 // Start the game
 		startGame();
 	}
-
 });
+
+//added this function to add a random symbol when its the computers turn
+function computerTurn(){
+	console.log("hello")
+	if (player2.value === "Computer"){
+		console.log("it worked")
+		let clickedBoxes = [];
+		let player2 = oTurn;
+		randombox = Math.ceil(Math.random() * clickedBoxes.length -1)
+		// clickedBoxes[randombox].push(innerHTML = player2);
+		
+	}
+
+}
+
+

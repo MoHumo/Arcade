@@ -75,6 +75,16 @@ body
 	border: none;
 	font-size: 20px;
 }
+#computer
+{
+    width: 150px;
+	padding: 10px 0;
+    margin: 20px auto;
+	background: white;
+	color: black;
+	border: none;
+	font-size: 20px;
+}
 #restartGame
 {
     width: 200px;
